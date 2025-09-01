@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
   <title>Advanced Snake Game</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
@@ -23,75 +23,98 @@
       font-family: 'Orbitron', monospace;
       color: #fff;
       overflow: hidden;
+      padding: 10px;
     }
 
     .game-container {
       text-align: center;
       position: relative;
+      width: 100%;
+      max-width: 600px;
     }
 
     .game-header {
-      margin-bottom: 20px;
+      margin-bottom: 15px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      width: 500px;
+      width: 100%;
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
     .score-board {
       background: rgba(0, 255, 136, 0.1);
       border: 2px solid #00ff88;
       border-radius: 10px;
-      padding: 10px 20px;
-      min-width: 120px;
+      padding: 8px 16px;
+      flex: 1;
+      min-width: 100px;
     }
 
     .score-label {
-      font-size: 12px;
+      font-size: 10px;
       color: #00ff88;
-      margin-bottom: 5px;
+      margin-bottom: 3px;
     }
 
     .score-value {
-      font-size: 24px;
+      font-size: 18px;
       font-weight: 900;
       color: #fff;
       text-shadow: 0 0 10px #00ff88;
     }
 
     .game-title {
-      font-size: 28px;
+      font-size: 24px;
       font-weight: 900;
       background: linear-gradient(45deg, #00ff88, #0080ff);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
       text-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+      flex: 1;
+      min-width: 120px;
     }
 
-    canvas {
+    .level-indicator {
+      background: rgba(0, 128, 255, 0.1);
+      border: 2px solid #0080ff;
+      border-radius: 10px;
+      padding: 8px 16px;
+      flex: 1;
+      min-width: 100px;
+    }
+
+    #game {
+      width: 100%;
+      height: auto;
+      max-width: 500px;
+      max-height: 500px;
+      aspect-ratio: 1;
       border: 3px solid #00ff88;
       background: #001122;
       border-radius: 12px;
       box-shadow:
         0 0 30px rgba(0, 255, 136, 0.4),
         inset 0 0 20px rgba(0, 255, 136, 0.1);
-      position: relative;
+      touch-action: none;
     }
 
     .controls {
-      margin-top: 20px;
+      margin-top: 15px;
       display: flex;
-      gap: 15px;
+      gap: 10px;
       justify-content: center;
+      flex-wrap: wrap;
     }
 
     button {
       background: linear-gradient(45deg, #00ff88, #00cc70);
       border: none;
       color: #001122;
-      padding: 12px 24px;
-      font-size: 14px;
+      padding: 10px 18px;
+      font-size: 12px;
       font-weight: 700;
       cursor: pointer;
       border-radius: 8px;
@@ -100,6 +123,7 @@
       text-transform: uppercase;
       letter-spacing: 1px;
       box-shadow: 0 4px 15px rgba(0, 255, 136, 0.3);
+      min-width: 80px;
     }
 
     button:hover {
@@ -195,27 +219,101 @@
     }
 
     .instructions {
-      position: absolute;
-      top: 10px;
+      position: fixed;
+      bottom: 10px;
       right: 10px;
-      background: rgba(0, 0, 0, 0.7);
-      padding: 15px;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 10px;
       border-radius: 8px;
-      font-size: 12px;
-      max-width: 200px;
+      font-size: 10px;
+      max-width: 150px;
+      z-index: 100;
     }
 
     .instructions h3 {
       color: #00ff88;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
+      font-size: 11px;
     }
 
-    .level-indicator {
-      background: rgba(0, 128, 255, 0.1);
-      border: 2px solid #0080ff;
-      border-radius: 10px;
-      padding: 10px 20px;
-      min-width: 120px;
+    /* Mobile-specific styles */
+    @media (max-width: 768px) {
+      body {
+        padding: 5px;
+      }
+
+      .game-header {
+        margin-bottom: 10px;
+      }
+
+      .game-title {
+        font-size: 20px;
+      }
+
+      .score-value {
+        font-size: 16px;
+      }
+
+      .score-label {
+        font-size: 9px;
+      }
+
+      button {
+        padding: 8px 12px;
+        font-size: 11px;
+        min-width: 70px;
+      }
+
+      .instructions {
+        display: none;
+        /* Hide on mobile to save space */
+      }
+
+      .level-up-notification {
+        padding: 15px 20px;
+        margin: 0 10px;
+        max-width: calc(100vw - 40px);
+      }
+
+      .level-up-notification h3 {
+        font-size: 20px;
+      }
+
+      .level-up-notification p {
+        font-size: 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .game-header {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .game-title {
+        order: -1;
+        font-size: 18px;
+      }
+
+      .score-board,
+      .level-indicator {
+        min-width: 80px;
+        padding: 6px 12px;
+      }
+
+      .score-value {
+        font-size: 14px;
+      }
+
+      .controls {
+        gap: 8px;
+      }
+
+      button {
+        padding: 6px 10px;
+        font-size: 10px;
+        min-width: 60px;
+      }
     }
   </style>
 </head>
@@ -234,7 +332,7 @@
       </div>
     </div>
 
-    <canvas id="game" width="500" height="500"></canvas>
+    <canvas id="game"></canvas>
 
     <div class="game-over" id="gameOver">
       <h2>Game Over!</h2>
@@ -281,7 +379,8 @@
     const levelUpMechanic = document.getElementById('levelUpMechanic');
 
     const gridSize = 25;
-    const gridCount = canvas.width / gridSize;
+    let gridCount;
+    let canvasSize;
 
     let snake = [];
     let food = {};
@@ -299,11 +398,36 @@
     let snakeDirection = 'right';
     let nextDirection = 'right';
 
+    // Mobile responsiveness
+    function resizeCanvas() {
+      const container = canvas.parentElement;
+      const maxSize = Math.min(
+        window.innerWidth - 20,
+        window.innerHeight - 200,
+        500
+      );
+
+      canvasSize = Math.floor(maxSize / gridSize) * gridSize;
+      canvas.width = canvasSize;
+      canvas.height = canvasSize;
+      gridCount = canvasSize / gridSize;
+
+      // Redraw if game is running
+      if (gameRunning) {
+        render();
+      }
+    }
+
     function initGame() {
+      resizeCanvas(); // Ensure proper canvas size
+
+      const startX = Math.floor(gridCount / 2);
+      const startY = Math.floor(gridCount / 2);
+
       snake = [
-        { x: 8, y: 10 },
-        { x: 7, y: 10 },
-        { x: 6, y: 10 }
+        { x: startX, y: startY },
+        { x: startX - 1, y: startY },
+        { x: startX - 2, y: startY }
       ];
       dx = 1;
       dy = 0;
@@ -647,15 +771,20 @@
       }
     });
 
-    // Touch controls for mobile
+    // Enhanced touch controls for mobile
     let touchStartX = null;
     let touchStartY = null;
+    const minSwipeDistance = 30;
 
     canvas.addEventListener('touchstart', (e) => {
       e.preventDefault();
       touchStartX = e.touches[0].clientX;
       touchStartY = e.touches[0].clientY;
-    });
+    }, { passive: false });
+
+    canvas.addEventListener('touchmove', (e) => {
+      e.preventDefault();
+    }, { passive: false });
 
     canvas.addEventListener('touchend', (e) => {
       e.preventDefault();
@@ -667,6 +796,11 @@
       const deltaX = touchEndX - touchStartX;
       const deltaY = touchEndY - touchStartY;
 
+      // Only register swipe if it's long enough
+      if (Math.abs(deltaX) < minSwipeDistance && Math.abs(deltaY) < minSwipeDistance) {
+        return;
+      }
+
       if (Math.abs(deltaX) > Math.abs(deltaY)) {
         if (deltaX > 0 && snakeDirection !== 'left') nextDirection = 'right';
         else if (deltaX < 0 && snakeDirection !== 'right') nextDirection = 'left';
@@ -677,9 +811,22 @@
 
       touchStartX = null;
       touchStartY = null;
+    }, { passive: false });
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+      resizeCanvas();
+    });
+
+    // Handle orientation change
+    window.addEventListener('orientationchange', () => {
+      setTimeout(() => {
+        resizeCanvas();
+      }, 100);
     });
 
     // Initialize game
+    resizeCanvas();
     initGame();
     render();
 
