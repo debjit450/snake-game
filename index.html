@@ -15,7 +15,7 @@
     }
 
     body {
-      background: linear-gradient(135deg, #0c1445, #1a0033);
+      background: linear-gradient(135deg, #0c1445, #1a0033, #2d1b69);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -24,6 +24,95 @@
       color: #fff;
       overflow: hidden;
       padding: 10px;
+      position: relative;
+    }
+
+    .settings-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      display: none;
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .settings-panel {
+      background: linear-gradient(135deg, #1a0033, #0c1445);
+      border: 2px solid #00ff88;
+      border-radius: 15px;
+      padding: 30px;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+    }
+
+    .setting-group {
+      margin: 20px 0;
+      text-align: left;
+    }
+
+    .setting-label {
+      display: block;
+      margin-bottom: 8px;
+      color: #00ff88;
+      font-weight: bold;
+    }
+
+    .setting-control {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      accent-color: #00ff88;
+    }
+
+    input[type="range"] {
+      flex: 1;
+      height: 8px;
+      border-radius: 4px;
+      background: #333;
+      outline: none;
+      accent-color: #00ff88;
+    }
+
+    .range-value {
+      min-width: 50px;
+      text-align: right;
+      color: #fff;
+      font-weight: bold;
+    }
+
+    .difficulty-buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .difficulty-btn {
+      padding: 8px 16px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid transparent;
+      border-radius: 8px;
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Orbitron', monospace;
+      font-size: 12px;
+    }
+
+    .difficulty-btn.active {
+      background: linear-gradient(45deg, #00ff88, #00cc70);
+      color: #001122;
+      border-color: #00ff88;
     }
 
     .game-container {
@@ -105,7 +194,7 @@
 
     .stats-row {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       gap: 8px;
       margin-bottom: 10px;
     }
@@ -121,6 +210,68 @@
     .stat-value {
       font-weight: 700;
       color: #00ff88;
+    }
+
+    .multiplier-indicator {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 215, 0, 0.9);
+      color: #000;
+      padding: 8px 12px;
+      border-radius: 20px;
+      font-weight: bold;
+      display: none;
+      z-index: 100;
+      animation: multiplierPulse 1s ease-in-out infinite;
+    }
+
+    @keyframes multiplierPulse {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.1);
+      }
+    }
+
+    .power-up-indicator {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      z-index: 100;
+    }
+
+    .power-up-item {
+      background: rgba(0, 0, 0, 0.8);
+      border: 2px solid;
+      border-radius: 8px;
+      padding: 8px;
+      font-size: 12px;
+      font-weight: bold;
+      min-width: 120px;
+      text-align: center;
+    }
+
+    .power-up-shield {
+      border-color: #0080ff;
+      color: #0080ff;
+    }
+
+    .power-up-magnet {
+      border-color: #ff6b6b;
+      color: #ff6b6b;
+    }
+
+    .power-up-slow {
+      border-color: #ffd700;
+      color: #ffd700;
     }
 
     #game {
@@ -180,6 +331,11 @@
       box-shadow: none;
     }
 
+    .secondary-btn {
+      background: linear-gradient(45deg, #666, #888);
+      color: #fff;
+    }
+
     .game-over {
       position: absolute;
       top: 50%;
@@ -191,7 +347,7 @@
       border: 2px solid #ff4444;
       text-align: center;
       display: none;
-      min-width: 300px;
+      min-width: 320px;
     }
 
     .game-over h2 {
@@ -267,6 +423,11 @@
       background: rgba(0, 0, 0, 0.7);
       border-radius: 60px;
       border: 2px solid #00ff88;
+      z-index: 1000;
+    }
+
+    .mobile-dpad.hidden {
+      display: none !important;
     }
 
     .dpad-btn {
@@ -314,6 +475,32 @@
       right: 5px;
       top: 50%;
       transform: translateY(-50%);
+    }
+
+    .settings-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(0, 255, 136, 0.2);
+      border: 2px solid #00ff88;
+      color: #00ff88;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 1000;
+      min-width: auto;
+      padding: 0;
+    }
+
+    .settings-btn:hover {
+      background: rgba(0, 255, 136, 0.4);
+      transform: rotate(90deg);
     }
 
     @keyframes levelUpPulse {
@@ -380,7 +567,7 @@
 
     /* Mobile styles */
     @media (max-width: 768px) {
-      .mobile-dpad {
+      .mobile-dpad:not(.hidden) {
         display: block;
       }
 
@@ -399,11 +586,15 @@
       }
 
       .stats-row {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
       }
 
       .final-stats {
         grid-template-columns: 1fr;
+      }
+
+      .settings-panel {
+        padding: 20px;
       }
     }
 
@@ -430,7 +621,59 @@
 </head>
 
 <body>
+  <button class="settings-btn" onclick="toggleSettings()">⚙</button>
+
+  <div class="settings-overlay" id="settingsOverlay">
+    <div class="settings-panel">
+      <h2 style="color: #00ff88; margin-bottom: 20px;">Game Settings</h2>
+
+      <div class="setting-group">
+        <label class="setting-label">Mobile D-Pad</label>
+        <div class="setting-control">
+          <input type="checkbox" id="showDpad" checked>
+          <label for="showDpad">Show virtual controls on mobile</label>
+        </div>
+      </div>
+
+      <div class="setting-group">
+        <label class="setting-label">Game Volume</label>
+        <div class="setting-control">
+          <input type="range" id="volumeSlider" min="0" max="100" value="50">
+          <span class="range-value" id="volumeValue">50%</span>
+        </div>
+      </div>
+
+      <div class="setting-group">
+        <label class="setting-label">Particle Effects</label>
+        <div class="setting-control">
+          <input type="checkbox" id="particleEffects" checked>
+          <label for="particleEffects">Enable visual effects</label>
+        </div>
+      </div>
+
+      <div class="setting-group">
+        <label class="setting-label">Game Difficulty</label>
+        <div class="difficulty-buttons">
+          <button class="difficulty-btn" data-difficulty="easy">Easy</button>
+          <button class="difficulty-btn active" data-difficulty="normal">Normal</button>
+          <button class="difficulty-btn" data-difficulty="hard">Hard</button>
+          <button class="difficulty-btn" data-difficulty="expert">Expert</button>
+        </div>
+      </div>
+
+      <div style="margin-top: 30px; display: flex; gap: 10px; justify-content: center;">
+        <button onclick="applySettings()">Apply</button>
+        <button class="secondary-btn" onclick="resetSettings()">Reset</button>
+        <button class="secondary-btn" onclick="toggleSettings()">Close</button>
+      </div>
+    </div>
+  </div>
+
   <div class="game-container">
+    <div class="multiplier-indicator" id="multiplierIndicator">2x Multiplier!</div>
+
+    <div class="power-up-indicator" id="powerUpIndicator"></div>
+
     <div class="game-header">
       <div class="score-board">
         <div class="score-label">Score</div>
@@ -458,8 +701,12 @@
         <div class="stat-value" id="speedDisplay">1x</div>
       </div>
       <div class="stat-item">
-        <div class="score-label">Big Food</div>
-        <div class="stat-value" id="bigFoodCount">0</div>
+        <div class="score-label">Special</div>
+        <div class="stat-value" id="specialFoodCount">0</div>
+      </div>
+      <div class="stat-item">
+        <div class="score-label">Combo</div>
+        <div class="stat-value" id="comboCounter">0</div>
       </div>
       <div class="stat-item">
         <div class="score-label">Best</div>
@@ -481,12 +728,12 @@
           <div class="stat-value" id="finalLevel">1</div>
         </div>
         <div class="final-stat">
-          <div class="score-label">Snake Length</div>
-          <div class="stat-value" id="finalLength">3</div>
+          <div class="score-label">Max Combo</div>
+          <div class="stat-value" id="finalCombo">0</div>
         </div>
         <div class="final-stat">
-          <div class="score-label">Big Foods</div>
-          <div class="stat-value" id="finalBigFood">0</div>
+          <div class="score-label">Special Foods</div>
+          <div class="stat-value" id="finalSpecialFood">0</div>
         </div>
       </div>
       <button onclick="startNewGame()">Play Again</button>
@@ -509,7 +756,7 @@
     </div>
   </div>
 
-  <div class="mobile-dpad">
+  <div class="mobile-dpad" id="mobileDpad">
     <div class="dpad-btn dpad-up" data-dir="up">↑</div>
     <div class="dpad-btn dpad-down" data-dir="down">↓</div>
     <div class="dpad-btn dpad-left" data-dir="left">←</div>
@@ -525,18 +772,38 @@
     <p>🔴 Normal (+10)</p>
     <p>🟠 Big Food (+25)</p>
     <p>💎 Bonus Food (+50)</p>
+    <p>⚡ Power Food (+100)</p>
+    <p>🎯 Portal Food</p>
     <br>
-    <h3>Rules</h3>
-    <p>• 100 points per level</p>
-    <p>• Levels 1-8: Wall wrapping</p>
-    <p>• Level 9+: Wall collision</p>
-    <p>• Special foods expire!</p>
-    <p>• Achievements unlock!</p>
+    <h3>Power-ups</h3>
+    <p>🛡️ Shield (3 hits)</p>
+    <p>🧲 Magnet (5s)</p>
+    <p>⏳ Slow Motion (3s)</p>
+    <br>
+    <h3>Features</h3>
+    <p>• Combo multipliers</p>
+    <p>• Advanced obstacles</p>
+    <p>• Portal teleportation</p>
+    <p>• Dynamic difficulty</p>
   </div>
 
   <script>
     const canvas = document.getElementById('game');
     const ctx = canvas.getContext('2d');
+
+    // Settings
+    let gameSettings = {
+      showDpad: true,
+      volume: 50,
+      particleEffects: true,
+      difficulty: 'normal'
+    };
+
+    // Load settings from localStorage
+    const savedSettings = localStorage.getItem('snakeGameSettings');
+    if (savedSettings) {
+      gameSettings = { ...gameSettings, ...JSON.parse(savedSettings) };
+    }
 
     // UI Elements
     const scoreElement = document.getElementById('score');
@@ -545,11 +812,14 @@
     const levelProgressElement = document.getElementById('levelProgress');
     const snakeLengthElement = document.getElementById('snakeLength');
     const speedDisplayElement = document.getElementById('speedDisplay');
-    const bigFoodCountElement = document.getElementById('bigFoodCount');
+    const specialFoodCountElement = document.getElementById('specialFoodCount');
+    const comboCounterElement = document.getElementById('comboCounter');
     const bestScoreElement = document.getElementById('bestScore');
     const gameOverElement = document.getElementById('gameOver');
     const levelUpElement = document.getElementById('levelUpNotification');
     const achievementElement = document.getElementById('achievementPopup');
+    const multiplierElement = document.getElementById('multiplierIndicator');
+    const powerUpElement = document.getElementById('powerUpIndicator');
 
     const gridSize = 20;
     let gridCount;
@@ -558,6 +828,10 @@
     // Game State
     let snake = [];
     let foods = [];
+    let obstacles = [];
+    let portals = [];
+    let particles = [];
+    let powerUps = [];
     let dx = 0;
     let dy = 0;
     let score = 0;
@@ -566,24 +840,92 @@
     let gameRunning = false;
     let gamePaused = false;
     let gameLoop = null;
-    let baseSpeed = 300; // Much slower starting speed
+    let baseSpeed = 250;
     let currentSpeed = baseSpeed;
-    let bigFoodEaten = 0;
+    let specialFoodEaten = 0;
     let bestScore = localStorage.getItem('snakeBestScore') || 0;
+    let maxCombo = 0;
 
-    // Game Mechanics
+    // Advanced Game Mechanics
     let snakeDirection = 'right';
     let nextDirection = 'right';
-    let foodSpawnTimer = 0;
-    let bonusFoodTimer = 0;
+    let comboCount = 0;
+    let comboMultiplier = 1;
+    let lastFoodTime = Date.now();
+    let shieldHits = 0;
+    let magnetActive = false;
+    let magnetTimer = 0;
+    let slowMotionActive = false;
+    let slowMotionTimer = 0;
     let achievements = JSON.parse(localStorage.getItem('snakeAchievements') || '{}');
 
-    // Food types
-    const FOOD_TYPES = {
-      NORMAL: { points: 10, color: '#ff6b6b', size: 0.8, chance: 0.7 },
-      BIG: { points: 25, color: '#ff9500', size: 1.2, chance: 0.25 },
-      BONUS: { points: 50, color: '#00d2ff', size: 1.0, chance: 0.05 }
+    // Difficulty settings
+    const difficultySettings = {
+      easy: { wallCollisionLevel: 15, speedMultiplier: 0.8, obstacleChance: 0.02 },
+      normal: { wallCollisionLevel: 10, speedMultiplier: 1.0, obstacleChance: 0.04 },
+      hard: { wallCollisionLevel: 6, speedMultiplier: 1.3, obstacleChance: 0.06 },
+      expert: { wallCollisionLevel: 3, speedMultiplier: 1.6, obstacleChance: 0.08 }
     };
+
+    // Food types - enhanced
+    const FOOD_TYPES = {
+      NORMAL: { points: 10, color: '#ff6b6b', size: 0.8, chance: 0.5 },
+      BIG: { points: 25, color: '#ff9500', size: 1.2, chance: 0.25 },
+      BONUS: { points: 50, color: '#00d2ff', size: 1.0, chance: 0.15 },
+      POWER: { points: 100, color: '#ffd700', size: 1.4, chance: 0.08 },
+      PORTAL: { points: 75, color: '#9b59b6', size: 1.1, chance: 0.02 }
+    };
+
+    function applySettings() {
+      const showDpad = document.getElementById('showDpad').checked;
+      const volume = document.getElementById('volumeSlider').value;
+      const particleEffects = document.getElementById('particleEffects').checked;
+      const difficulty = document.querySelector('.difficulty-btn.active').dataset.difficulty;
+
+      gameSettings = { showDpad, volume: parseInt(volume), particleEffects, difficulty };
+      localStorage.setItem('snakeGameSettings', JSON.stringify(gameSettings));
+
+      // Apply mobile D-pad setting
+      const mobileDpad = document.getElementById('mobileDpad');
+      if (showDpad) {
+        mobileDpad.classList.remove('hidden');
+      } else {
+        mobileDpad.classList.add('hidden');
+      }
+
+      // Apply difficulty
+      baseSpeed = 250 / difficultySettings[difficulty].speedMultiplier;
+
+      toggleSettings();
+    }
+
+    function resetSettings() {
+      document.getElementById('showDpad').checked = true;
+      document.getElementById('volumeSlider').value = 50;
+      document.getElementById('volumeValue').textContent = '50%';
+      document.getElementById('particleEffects').checked = true;
+
+      document.querySelectorAll('.difficulty-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelector('[data-difficulty="normal"]').classList.add('active');
+    }
+
+    function toggleSettings() {
+      const overlay = document.getElementById('settingsOverlay');
+      const isVisible = overlay.style.display === 'flex';
+      overlay.style.display = isVisible ? 'none' : 'flex';
+
+      if (!isVisible) {
+        // Load current settings into UI
+        document.getElementById('showDpad').checked = gameSettings.showDpad;
+        document.getElementById('volumeSlider').value = gameSettings.volume;
+        document.getElementById('volumeValue').textContent = gameSettings.volume + '%';
+        document.getElementById('particleEffects').checked = gameSettings.particleEffects;
+
+        document.querySelectorAll('.difficulty-btn').forEach(btn => {
+          btn.classList.toggle('active', btn.dataset.difficulty === gameSettings.difficulty);
+        });
+      }
+    }
 
     function resizeCanvas() {
       const container = canvas.parentElement;
@@ -616,47 +958,162 @@
       ];
 
       foods = [];
+      obstacles = [];
+      portals = [];
+      particles = [];
+      powerUps = [];
       dx = 1;
       dy = 0;
       score = 0;
       level = 1;
       levelProgress = 0;
-      bigFoodEaten = 0;
+      specialFoodEaten = 0;
+      comboCount = 0;
+      comboMultiplier = 1;
+      maxCombo = 0;
+      shieldHits = 0;
+      magnetActive = false;
+      magnetTimer = 0;
+      slowMotionActive = false;
+      slowMotionTimer = 0;
       currentSpeed = baseSpeed;
       snakeDirection = 'right';
       nextDirection = 'right';
-      foodSpawnTimer = 0;
-      bonusFoodTimer = 0;
+      lastFoodTime = Date.now();
 
       updateUI();
       generateFood();
+      updatePowerUpDisplay();
     }
 
     function generateFood() {
-      // Only keep one food on screen at a time
-      if (foods.length > 0) return;
+      // Keep 1-2 foods on screen
+      if (foods.length >= 2) return;
 
       let foodType = 'NORMAL';
       const rand = Math.random();
 
-      // Adjust probabilities for single food system
-      if (level >= 3 && rand < 0.15) foodType = 'BONUS';
-      else if (level >= 2 && rand < 0.35) foodType = 'BIG';
+      // Enhanced food probability system
+      if (level >= 5 && rand < 0.05) foodType = 'PORTAL';
+      else if (level >= 4 && rand < 0.12) foodType = 'POWER';
+      else if (level >= 3 && rand < 0.25) foodType = 'BONUS';
+      else if (level >= 2 && rand < 0.45) foodType = 'BIG';
 
       let newFood;
+      let attempts = 0;
       do {
         newFood = {
           x: Math.floor(Math.random() * gridCount),
           y: Math.floor(Math.random() * gridCount),
           type: foodType,
           spawnTime: Date.now(),
-          // Time limits for special foods (in milliseconds)
           timeLimit: foodType === 'NORMAL' ? null :
-            foodType === 'BIG' ? 8000 : 5000 // Big food: 8s, Bonus food: 5s
+            foodType === 'BIG' ? 10000 :
+              foodType === 'BONUS' ? 8000 :
+                foodType === 'POWER' ? 6000 :
+                  foodType === 'PORTAL' ? 12000 : null
         };
-      } while (snake.some(part => part.x === newFood.x && part.y === newFood.y));
+        attempts++;
+      } while (attempts < 50 && (
+        snake.some(part => part.x === newFood.x && part.y === newFood.y) ||
+        obstacles.some(obs => obs.x === newFood.x && obs.y === newFood.y)
+      ));
 
-      foods.push(newFood);
+      if (attempts < 50) {
+        foods.push(newFood);
+      }
+    }
+
+    function generateObstacle() {
+      if (level < 3) return;
+
+      const difficulty = difficultySettings[gameSettings.difficulty];
+      if (Math.random() > difficulty.obstacleChance) return;
+
+      let newObstacle;
+      let attempts = 0;
+      do {
+        newObstacle = {
+          x: Math.floor(Math.random() * gridCount),
+          y: Math.floor(Math.random() * gridCount),
+          type: Math.random() < 0.7 ? 'block' : 'spike',
+          spawnTime: Date.now()
+        };
+        attempts++;
+      } while (attempts < 20 && (
+        snake.some(part => part.x === newObstacle.x && part.y === newObstacle.y) ||
+        foods.some(food => food.x === newObstacle.x && food.y === newObstacle.y) ||
+        obstacles.some(obs => obs.x === newObstacle.x && obs.y === newObstacle.y)
+      ));
+
+      if (attempts < 20) {
+        obstacles.push(newObstacle);
+      }
+    }
+
+    function generatePortal() {
+      if (portals.length >= 2 || level < 5) return;
+
+      for (let i = 0; i < 2; i++) {
+        let portal;
+        let attempts = 0;
+        do {
+          portal = {
+            x: Math.floor(Math.random() * gridCount),
+            y: Math.floor(Math.random() * gridCount),
+            id: i,
+            cooldown: 0
+          };
+          attempts++;
+        } while (attempts < 20 && (
+          snake.some(part => part.x === portal.x && part.y === portal.y) ||
+          foods.some(food => food.x === portal.x && food.y === portal.y) ||
+          obstacles.some(obs => obs.x === portal.x && obs.y === portal.y) ||
+          portals.some(p => p.x === portal.x && p.y === portal.y)
+        ));
+
+        if (attempts < 20) {
+          portals.push(portal);
+        }
+      }
+    }
+
+    function createParticle(x, y, color, velocity = null) {
+      if (!gameSettings.particleEffects) return;
+
+      const particle = {
+        x: x * gridSize + gridSize / 2,
+        y: y * gridSize + gridSize / 2,
+        vx: velocity ? velocity.x : (Math.random() - 0.5) * 4,
+        vy: velocity ? velocity.y : (Math.random() - 0.5) * 4,
+        life: 1.0,
+        decay: 0.02 + Math.random() * 0.02,
+        color: color,
+        size: 2 + Math.random() * 3
+      };
+      particles.push(particle);
+    }
+
+    function updateParticles() {
+      particles = particles.filter(particle => {
+        particle.x += particle.vx;
+        particle.y += particle.vy;
+        particle.life -= particle.decay;
+        particle.size *= 0.98;
+        return particle.life > 0 && particle.size > 0.1;
+      });
+    }
+
+    function drawParticles() {
+      particles.forEach(particle => {
+        ctx.save();
+        ctx.globalAlpha = particle.life;
+        ctx.fillStyle = particle.color;
+        ctx.beginPath();
+        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      });
     }
 
     function drawSnakeSegment(x, y, isHead = false, direction = 'right', bodyIndex = 0) {
@@ -665,17 +1122,33 @@
       const padding = 1;
 
       if (isHead) {
-        // Animated head with gradient
+        // Enhanced head with shield effect
         const gradient = ctx.createRadialGradient(
           pixelX + gridSize / 2, pixelY + gridSize / 2, 0,
           pixelX + gridSize / 2, pixelY + gridSize / 2, gridSize / 2
         );
-        gradient.addColorStop(0, '#7fff00');
-        gradient.addColorStop(0.7, '#32cd32');
-        gradient.addColorStop(1, '#228b22');
+
+        if (shieldHits > 0) {
+          gradient.addColorStop(0, '#00bfff');
+          gradient.addColorStop(0.7, '#0080ff');
+          gradient.addColorStop(1, '#004080');
+        } else {
+          gradient.addColorStop(0, '#7fff00');
+          gradient.addColorStop(0.7, '#32cd32');
+          gradient.addColorStop(1, '#228b22');
+        }
 
         ctx.fillStyle = gradient;
         ctx.fillRect(pixelX + padding, pixelY + padding, gridSize - padding * 2, gridSize - padding * 2);
+
+        // Shield visual effect
+        if (shieldHits > 0) {
+          ctx.strokeStyle = '#00bfff';
+          ctx.lineWidth = 2;
+          ctx.setLineDash([4, 4]);
+          ctx.strokeRect(pixelX - 2, pixelY - 2, gridSize + 4, gridSize + 4);
+          ctx.setLineDash([]);
+        }
 
         // Eyes based on direction
         ctx.fillStyle = '#000';
@@ -701,18 +1174,16 @@
             break;
         }
       } else {
-        // Body segments with fading effect
+        // Enhanced body segments
         const intensity = Math.max(0.3, 1 - (bodyIndex * 0.03));
-        const bodyGradient = ctx.createLinearGradient(pixelX, pixelY, pixelX + gridSize, pixelY + gridSize);
-        bodyGradient.addColorStop(0, `rgba(50, 205, 50, ${intensity})`);
-        bodyGradient.addColorStop(1, `rgba(34, 139, 34, ${intensity})`);
+        const hue = magnetActive ? 200 : 120; // Blue tint when magnet is active
 
-        ctx.fillStyle = bodyGradient;
+        ctx.fillStyle = `hsla(${hue}, 70%, 40%, ${intensity})`;
         ctx.fillRect(pixelX + padding, pixelY + padding, gridSize - padding * 2, gridSize - padding * 2);
 
         // Scale pattern
-        if (bodyIndex % 2 === 0) {
-          ctx.fillStyle = `rgba(0, 100, 0, ${intensity * 0.3})`;
+        if (bodyIndex % 3 === 0) {
+          ctx.fillStyle = `hsla(${hue}, 50%, 20%, ${intensity * 0.5})`;
           ctx.fillRect(pixelX + 4, pixelY + 4, gridSize - 8, gridSize - 8);
         }
       }
@@ -722,28 +1193,49 @@
       const pixelX = food.x * gridSize;
       const pixelY = food.y * gridSize;
       const foodData = FOOD_TYPES[food.type];
-      const size = gridSize * foodData.size;
+      let size = gridSize * foodData.size;
 
-      // Time-based effects for foods with time limits
+      // Time-based effects
       let timeRatio = 1;
       if (food.timeLimit) {
         const elapsed = Date.now() - food.spawnTime;
         timeRatio = Math.max(0, 1 - (elapsed / food.timeLimit));
 
-        // Flashing effect when about to expire
         if (timeRatio < 0.3) {
-          const flashRate = timeRatio < 0.15 ? 8 : 4;
+          const flashRate = timeRatio < 0.15 ? 12 : 6;
           const flash = Math.sin(Date.now() * flashRate * 0.01);
-          if (flash < 0) return; // Skip drawing during flash
+          if (flash < 0) return;
         }
       }
 
-      // Pulsing animation
-      const pulse = Math.sin((Date.now() - food.spawnTime) * 0.005) * 0.1 + 0.9;
-      const currentSize = size * pulse * timeRatio;
-      const offset = (gridSize - currentSize) / 2;
+      // Magnet effect
+      if (magnetActive && food.type !== 'PORTAL') {
+        const head = snake[0];
+        const distance = Math.sqrt(
+          Math.pow(food.x - head.x, 2) + Math.pow(food.y - head.y, 2)
+        );
 
-      // Food gradient
+        if (distance <= 4) {
+          const angle = Math.atan2(head.y - food.y, head.x - food.x);
+          const pullStrength = 0.3;
+          food.x += Math.cos(angle) * pullStrength;
+          food.y += Math.sin(angle) * pullStrength;
+
+          // Create magnet particles
+          if (Math.random() < 0.3) {
+            createParticle(food.x, food.y, '#ff6b6b', {
+              x: Math.cos(angle) * 2,
+              y: Math.sin(angle) * 2
+            });
+          }
+        }
+      }
+
+      // Enhanced animations
+      const pulse = Math.sin((Date.now() - food.spawnTime) * 0.008) * 0.15 + 0.85;
+      const currentSize = size * pulse * timeRatio;
+
+      // Food gradient with enhanced effects
       const gradient = ctx.createRadialGradient(
         pixelX + gridSize / 2, pixelY + gridSize / 2, 0,
         pixelX + gridSize / 2, pixelY + gridSize / 2, currentSize / 2
@@ -765,6 +1257,16 @@
           gradient.addColorStop(0.5, '#0099cc');
           gradient.addColorStop(1, '#006699');
           break;
+        case 'POWER':
+          gradient.addColorStop(0, '#ffd700');
+          gradient.addColorStop(0.5, '#ffaa00');
+          gradient.addColorStop(1, '#cc8800');
+          break;
+        case 'PORTAL':
+          gradient.addColorStop(0, '#e74c3c');
+          gradient.addColorStop(0.5, '#9b59b6');
+          gradient.addColorStop(1, '#2c3e50');
+          break;
       }
 
       ctx.save();
@@ -774,14 +1276,30 @@
       ctx.arc(pixelX + gridSize / 2, pixelY + gridSize / 2, currentSize / 2, 0, Math.PI * 2);
       ctx.fill();
 
-      // Special effects for bonus food
-      if (food.type === 'BONUS') {
+      // Special effects for each food type
+      if (food.type === 'POWER') {
+        // Lightning effect for power food
         ctx.strokeStyle = '#ffffff';
         ctx.lineWidth = 2;
         ctx.globalAlpha = timeRatio * 0.8;
+        const lightningOffset = Math.sin(Date.now() * 0.02) * 3;
         ctx.beginPath();
-        ctx.arc(pixelX + gridSize / 2, pixelY + gridSize / 2, currentSize / 2, 0, Math.PI * 2);
+        ctx.arc(pixelX + gridSize / 2 + lightningOffset, pixelY + gridSize / 2, currentSize / 2, 0, Math.PI * 2);
         ctx.stroke();
+      } else if (food.type === 'PORTAL') {
+        // Swirling portal effect
+        ctx.save();
+        ctx.translate(pixelX + gridSize / 2, pixelY + gridSize / 2);
+        ctx.rotate(Date.now() * 0.005);
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 1;
+        ctx.globalAlpha = 0.6;
+        for (let i = 0; i < 3; i++) {
+          ctx.beginPath();
+          ctx.arc(0, 0, (currentSize / 2) - i * 3, 0, Math.PI);
+          ctx.stroke();
+        }
+        ctx.restore();
       }
 
       // Time limit indicator ring
@@ -803,24 +1321,94 @@
         ctx.stroke();
       }
 
-      // Food highlight
-      ctx.globalAlpha = timeRatio * 0.4;
-      ctx.fillStyle = '#ffffff';
+      ctx.restore();
+    }
+
+    function drawObstacle(obstacle) {
+      const pixelX = obstacle.x * gridSize;
+      const pixelY = obstacle.y * gridSize;
+      const padding = 2;
+
+      ctx.save();
+
+      if (obstacle.type === 'spike') {
+        // Animated spikes
+        ctx.fillStyle = '#ff4444';
+        ctx.strokeStyle = '#aa0000';
+        ctx.lineWidth = 2;
+
+        const centerX = pixelX + gridSize / 2;
+        const centerY = pixelY + gridSize / 2;
+        const size = gridSize / 2 - padding;
+
+        ctx.beginPath();
+        for (let i = 0; i < 8; i++) {
+          const angle = (i / 8) * Math.PI * 2;
+          const x = centerX + Math.cos(angle) * size;
+          const y = centerY + Math.sin(angle) * size;
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+      } else {
+        // Static blocks
+        ctx.fillStyle = '#666';
+        ctx.strokeStyle = '#999';
+        ctx.lineWidth = 1;
+        ctx.fillRect(pixelX + padding, pixelY + padding, gridSize - padding * 2, gridSize - padding * 2);
+        ctx.strokeRect(pixelX + padding, pixelY + padding, gridSize - padding * 2, gridSize - padding * 2);
+      }
+
+      ctx.restore();
+    }
+
+    function drawPortal(portal) {
+      const pixelX = portal.x * gridSize;
+      const pixelY = portal.y * gridSize;
+      const centerX = pixelX + gridSize / 2;
+      const centerY = pixelY + gridSize / 2;
+
+      ctx.save();
+
+      // Portal animation
+      const time = Date.now() * 0.01;
+      const baseRadius = gridSize / 3;
+
+      // Outer ring
+      ctx.strokeStyle = portal.cooldown > 0 ? '#666' : '#9b59b6';
+      ctx.lineWidth = 3;
       ctx.beginPath();
-      ctx.arc(pixelX + gridSize / 2 - 3, pixelY + gridSize / 2 - 3, 3, 0, Math.PI * 2);
-      ctx.fill();
+      ctx.arc(centerX, centerY, baseRadius + Math.sin(time) * 2, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // Inner swirl
+      if (portal.cooldown <= 0) {
+        ctx.strokeStyle = '#e74c3c';
+        ctx.lineWidth = 2;
+        for (let i = 0; i < 4; i++) {
+          ctx.beginPath();
+          const angle = time + (i * Math.PI / 2);
+          const startAngle = angle;
+          const endAngle = angle + Math.PI / 3;
+          ctx.arc(centerX, centerY, baseRadius * 0.7, startAngle, endAngle);
+          ctx.stroke();
+        }
+      }
 
       ctx.restore();
     }
 
     function drawBackground() {
-      // Animated background
+      // Enhanced animated background
       ctx.fillStyle = '#001122';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // Grid with subtle animation
+      // Dynamic grid with level-based intensity
       const time = Date.now() * 0.001;
-      ctx.strokeStyle = `rgba(0, 255, 136, ${0.05 + Math.sin(time) * 0.02})`;
+      const intensity = 0.03 + (level * 0.005);
+      ctx.strokeStyle = `rgba(0, 255, 136, ${intensity + Math.sin(time) * 0.01})`;
       ctx.lineWidth = 1;
 
       for (let i = 0; i <= gridCount; i++) {
@@ -834,10 +1422,49 @@
         ctx.lineTo(canvas.width, i * gridSize);
         ctx.stroke();
       }
+
+      // Level-based background effects
+      if (level >= 5) {
+        ctx.save();
+        ctx.globalAlpha = 0.1;
+        ctx.fillStyle = `hsl(${(time * 50) % 360}, 50%, 30%)`;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.restore();
+      }
     }
 
     function updateGame() {
       if (!gameRunning || gamePaused) return;
+
+      // Update timers
+      if (magnetActive) {
+        magnetTimer -= currentSpeed;
+        if (magnetTimer <= 0) {
+          magnetActive = false;
+        }
+      }
+
+      if (slowMotionActive) {
+        slowMotionTimer -= currentSpeed;
+        if (slowMotionTimer <= 0) {
+          slowMotionActive = false;
+        }
+      }
+
+      // Update portals
+      portals.forEach(portal => {
+        if (portal.cooldown > 0) {
+          portal.cooldown -= currentSpeed;
+        }
+      });
+
+      // Update combo multiplier
+      const timeSinceLastFood = Date.now() - lastFoodTime;
+      if (timeSinceLastFood > 3000) {
+        comboCount = 0;
+        comboMultiplier = 1;
+        multiplierElement.style.display = 'none';
+      }
 
       // Update direction
       snakeDirection = nextDirection;
@@ -853,88 +1480,252 @@
 
       const head = { x: snake[0].x + dx, y: snake[0].y + dy };
 
-      // Wall collision logic - much later wall collision
-      if (level <= 8) {
-        // Wall wrapping for easier levels (extended to level 8)
+      // Wall collision logic with difficulty-based timing
+      const difficulty = difficultySettings[gameSettings.difficulty];
+      if (level <= difficulty.wallCollisionLevel) {
+        // Wall wrapping
         if (head.x < 0) head.x = gridCount - 1;
         if (head.x >= gridCount) head.x = 0;
         if (head.y < 0) head.y = gridCount - 1;
         if (head.y >= gridCount) head.y = 0;
       } else {
-        // Wall collision only for very advanced levels (9+)
+        // Wall collision
         if (head.x < 0 || head.x >= gridCount || head.y < 0 || head.y >= gridCount) {
-          gameOver();
-          return;
+          if (shieldHits > 0) {
+            shieldHits--;
+            // Bounce back
+            head.x = snake[0].x;
+            head.y = snake[0].y;
+            createParticle(head.x, head.y, '#00bfff');
+            showFoodBonus(head.x * gridSize, head.y * gridSize, 'SHIELD!');
+          } else {
+            gameOver();
+            return;
+          }
+        }
+      }
+
+      // Obstacle collision
+      const hitObstacle = obstacles.find(obs => obs.x === head.x && obs.y === head.y);
+      if (hitObstacle) {
+        if (hitObstacle.type === 'spike') {
+          if (shieldHits > 0) {
+            shieldHits--;
+            obstacles = obstacles.filter(obs => obs !== hitObstacle);
+            createParticle(head.x, head.y, '#ff4444');
+            showFoodBonus(head.x * gridSize, head.y * gridSize, 'SPIKE DESTROYED!');
+          } else {
+            gameOver();
+            return;
+          }
+        } else {
+          // Block - always kills
+          if (shieldHits > 0) {
+            shieldHits--;
+            head.x = snake[0].x;
+            head.y = snake[0].y;
+            createParticle(head.x, head.y, '#666');
+          } else {
+            gameOver();
+            return;
+          }
+        }
+      }
+
+      // Portal collision
+      const hitPortal = portals.find(portal => portal.x === head.x && portal.y === head.y && portal.cooldown <= 0);
+      if (hitPortal) {
+        const otherPortal = portals.find(portal => portal !== hitPortal);
+        if (otherPortal) {
+          head.x = otherPortal.x;
+          head.y = otherPortal.y;
+          hitPortal.cooldown = 2000;
+          otherPortal.cooldown = 2000;
+          createParticle(head.x, head.y, '#9b59b6');
+          showFoodBonus(head.x * gridSize, head.y * gridSize, 'PORTAL!');
         }
       }
 
       // Self collision
       if (snake.some(part => part.x === head.x && part.y === head.y)) {
-        gameOver();
-        return;
+        if (shieldHits > 0) {
+          shieldHits--;
+          head.x = snake[0].x;
+          head.y = snake[0].y;
+          createParticle(head.x, head.y, '#00bfff');
+        } else {
+          gameOver();
+          return;
+        }
       }
 
       snake.unshift(head);
 
-      // Food collision and time limit management
+      // Food collision and management
       let foodEaten = false;
       const currentTime = Date.now();
 
       foods = foods.filter(food => {
         // Check if food expired
         if (food.timeLimit && (currentTime - food.spawnTime) > food.timeLimit) {
-          return false; // Remove expired food
+          createParticle(food.x, food.y, '#666');
+          return false;
         }
 
         // Check collision
-        if (head.x === food.x && head.y === food.y) {
+        if (Math.floor(head.x) === Math.floor(food.x) && Math.floor(head.y) === Math.floor(food.y)) {
           const foodData = FOOD_TYPES[food.type];
-          const points = foodData.points * level;
-          score += points;
-          levelProgress += points;
+          let points = foodData.points;
 
-          if (food.type === 'BIG' || food.type === 'BONUS') {
-            bigFoodEaten++;
+          // Apply combo multiplier
+          if (comboMultiplier > 1) {
+            points *= comboMultiplier;
           }
 
-          // Show points animation
-          showFoodBonus(food.x * gridSize, food.y * gridSize, points);
+          // Apply level multiplier
+          points = Math.floor(points * (1 + (level - 1) * 0.1));
+
+          score += points;
+          levelProgress += Math.min(points, 50); // Cap level progress per food
+
+          // Handle special food effects
+          if (food.type === 'POWER') {
+            // Grant random power-up
+            const powerTypes = ['shield', 'magnet', 'slow'];
+            const randomPower = powerTypes[Math.floor(Math.random() * powerTypes.length)];
+            activatePowerUp(randomPower);
+          } else if (food.type === 'PORTAL') {
+            // Teleport effect already handled above
+            generatePortal();
+          }
+
+          if (food.type !== 'NORMAL') {
+            specialFoodEaten++;
+          }
+
+          // Update combo system
+          comboCount++;
+          maxCombo = Math.max(maxCombo, comboCount);
+          lastFoodTime = currentTime;
+
+          if (comboCount >= 3) {
+            comboMultiplier = Math.min(3, Math.floor(comboCount / 3) + 1);
+            multiplierElement.textContent = `${comboMultiplier}x Combo!`;
+            multiplierElement.style.display = 'block';
+          }
+
+          // Create food particles
+          createParticle(food.x, food.y, foodData.color);
+          showFoodBonus(food.x * gridSize, food.y * gridSize, `+${points}`);
 
           foodEaten = true;
           checkAchievements();
-          return false; // Remove eaten food
+          return false;
         }
-        return true; // Keep food
+        return true;
       });
 
       if (!foodEaten) {
         snake.pop();
       }
 
-      // Level progression (100 points per level)
-      const requiredForNextLevel = 100;
+      // Level progression
+      const requiredForNextLevel = 100 + (level - 1) * 25; // Increasing requirements
       if (levelProgress >= requiredForNextLevel) {
         level++;
         levelProgress = 0;
-        // Speed increases more gradually
-        currentSpeed = Math.max(80, baseSpeed - (level - 1) * 20);
+
+        // Speed adjustment with slow motion consideration
+        const baseSpeedReduction = (level - 1) * 15;
+        const difficultyMultiplier = difficultySettings[gameSettings.difficulty].speedMultiplier;
+        currentSpeed = Math.max(60, (baseSpeed - baseSpeedReduction) / difficultyMultiplier);
+
+        if (slowMotionActive) {
+          currentSpeed *= 1.5;
+        }
+
         showLevelUpNotification();
+
+        // Generate level content
+        if (level >= 3 && obstacles.length < level) {
+          generateObstacle();
+        }
+        if (level >= 5 && portals.length === 0) {
+          generatePortal();
+        }
+
         restartGameLoop();
       }
 
-      // Generate new food if none exists
-      if (foods.length === 0) {
+      // Generate new food
+      if (foods.length === 0 || (foods.length === 1 && Math.random() < 0.1)) {
         generateFood();
       }
 
+      // Occasionally generate obstacles
+      if (level >= 3 && Math.random() < 0.002) {
+        generateObstacle();
+      }
+
+      updateParticles();
       updateUI();
       render();
+    }
+
+    function activatePowerUp(type) {
+      switch (type) {
+        case 'shield':
+          shieldHits = 3;
+          showAchievement('Shield Activated! 3 hits protected');
+          break;
+        case 'magnet':
+          magnetActive = true;
+          magnetTimer = 5000;
+          showAchievement('Magnet Active! Food attraction for 5s');
+          break;
+        case 'slow':
+          slowMotionActive = true;
+          slowMotionTimer = 3000;
+          currentSpeed *= 1.5;
+          restartGameLoop();
+          showAchievement('Slow Motion! Time slowed for 3s');
+          break;
+      }
+      updatePowerUpDisplay();
+    }
+
+    function updatePowerUpDisplay() {
+      const indicator = powerUpElement;
+      indicator.innerHTML = '';
+
+      if (shieldHits > 0) {
+        const shield = document.createElement('div');
+        shield.className = 'power-up-item power-up-shield';
+        shield.textContent = `🛡️ Shield: ${shieldHits}`;
+        indicator.appendChild(shield);
+      }
+
+      if (magnetActive) {
+        const magnet = document.createElement('div');
+        magnet.className = 'power-up-item power-up-magnet';
+        const timeLeft = Math.ceil(magnetTimer / 1000);
+        magnet.textContent = `🧲 Magnet: ${timeLeft}s`;
+        indicator.appendChild(magnet);
+      }
+
+      if (slowMotionActive) {
+        const slow = document.createElement('div');
+        slow.className = 'power-up-item power-up-slow';
+        const timeLeft = Math.ceil(slowMotionTimer / 1000);
+        slow.textContent = `⏳ Slow: ${timeLeft}s`;
+        indicator.appendChild(slow);
+      }
     }
 
     function showFoodBonus(x, y, points) {
       const bonus = document.createElement('div');
       bonus.className = 'food-bonus';
-      bonus.textContent = `+${points}`;
+      bonus.textContent = points;
       bonus.style.left = x + 'px';
       bonus.style.top = y + 'px';
 
@@ -946,52 +1737,77 @@
       const newAchievements = [];
 
       // Score-based achievements
-      if (score >= 100 && !achievements.century) {
+      if (score >= 200 && !achievements.century) {
         achievements.century = true;
-        newAchievements.push("Century Club - Scored 100 points!");
+        newAchievements.push("First Milestone - Scored 200 points!");
       }
 
-      if (score >= 500 && !achievements.highScore) {
+      if (score >= 1000 && !achievements.highScore) {
         achievements.highScore = true;
-        newAchievements.push("High Scorer - Reached 500 points!");
+        newAchievements.push("High Scorer - Reached 1000 points!");
       }
 
-      if (score >= 1000 && !achievements.master) {
+      if (score >= 2500 && !achievements.master) {
         achievements.master = true;
-        newAchievements.push("Snake Master - Reached 1000 points!");
+        newAchievements.push("Snake Master - Reached 2500 points!");
+      }
+
+      if (score >= 5000 && !achievements.legend) {
+        achievements.legend = true;
+        newAchievements.push("Legend - Reached 5000 points!");
       }
 
       // Length-based achievements
-      if (snake.length >= 10 && !achievements.growing) {
+      if (snake.length >= 15 && !achievements.growing) {
         achievements.growing = true;
-        newAchievements.push("Growing Strong - Length of 10!");
+        newAchievements.push("Growing Strong - Length of 15!");
       }
 
-      if (snake.length >= 20 && !achievements.longSnake) {
+      if (snake.length >= 30 && !achievements.longSnake) {
         achievements.longSnake = true;
-        newAchievements.push("Long Snake - Length of 20!");
+        newAchievements.push("Long Snake - Length of 30!");
+      }
+
+      if (snake.length >= 50 && !achievements.giant) {
+        achievements.giant = true;
+        newAchievements.push("Giant Snake - Length of 50!");
       }
 
       // Level-based achievements
-      if (level >= 5 && !achievements.levelFive) {
-        achievements.levelFive = true;
-        newAchievements.push("Speed Demon - Reached Level 5!");
+      if (level >= 8 && !achievements.levelEight) {
+        achievements.levelEight = true;
+        newAchievements.push("Speed Demon - Reached Level 8!");
       }
 
-      if (level >= 10 && !achievements.levelTen) {
-        achievements.levelTen = true;
-        newAchievements.push("Elite Player - Reached Level 10!");
+      if (level >= 15 && !achievements.levelFifteen) {
+        achievements.levelFifteen = true;
+        newAchievements.push("Elite Player - Reached Level 15!");
       }
 
-      // Special food achievements
-      if (bigFoodEaten >= 5 && !achievements.bigEater) {
-        achievements.bigEater = true;
-        newAchievements.push("Big Appetite - Ate 5 special foods!");
+      if (level >= 25 && !achievements.levelTwentyFive) {
+        achievements.levelTwentyFive = true;
+        newAchievements.push("Snake God - Reached Level 25!");
       }
 
-      if (bigFoodEaten >= 15 && !achievements.gourmet) {
-        achievements.gourmet = true;
-        newAchievements.push("Gourmet Snake - Ate 15 special foods!");
+      // Special achievements
+      if (comboCount >= 5 && !achievements.comboMaster) {
+        achievements.comboMaster = true;
+        newAchievements.push("Combo Master - 5x combo achieved!");
+      }
+
+      if (specialFoodEaten >= 10 && !achievements.specialist) {
+        achievements.specialist = true;
+        newAchievements.push("Specialist - Ate 10 special foods!");
+      }
+
+      if (shieldHits > 0 && !achievements.survivor) {
+        achievements.survivor = true;
+        newAchievements.push("Survivor - Used shield protection!");
+      }
+
+      if (magnetActive && !achievements.magnetic) {
+        achievements.magnetic = true;
+        newAchievements.push("Magnetic Personality - Used magnet power!");
       }
 
       // Save achievements
@@ -1014,19 +1830,27 @@
     function render() {
       drawBackground();
 
+      // Draw portals
+      portals.forEach(portal => drawPortal(portal));
+
+      // Draw obstacles
+      obstacles.forEach(obstacle => drawObstacle(obstacle));
+
       // Draw all foods
       foods.forEach(food => {
         ctx.save();
-        // Pulsing effect for bonus food
-        if (food.type === 'BONUS') {
-          const pulse = Math.sin(Date.now() * 0.01) * 0.2 + 0.8;
+        if (food.type === 'BONUS' || food.type === 'POWER') {
+          const pulse = Math.sin(Date.now() * 0.015) * 0.3 + 0.7;
           ctx.globalAlpha = pulse;
         }
         drawFood(food);
         ctx.restore();
       });
 
-      // Draw snake with smooth animation
+      // Draw particles
+      drawParticles();
+
+      // Draw snake
       snake.forEach((part, index) => {
         drawSnakeSegment(
           part.x,
@@ -1037,13 +1861,14 @@
         );
       });
 
-      // Level warning overlay for level 9+
-      if (level >= 9) {
+      // Enhanced level warning overlay
+      const difficulty = difficultySettings[gameSettings.difficulty];
+      if (level > difficulty.wallCollisionLevel) {
         ctx.save();
-        ctx.strokeStyle = '#ff4444';
+        ctx.strokeStyle = shieldHits > 0 ? '#0080ff' : '#ff4444';
         ctx.lineWidth = 4;
-        ctx.setLineDash([10, 5]);
-        ctx.strokeRect(2, 2, canvas.width - 4, canvas.height - 4);
+        ctx.setLineDash([15, 10]);
+        ctx.strokeRect(3, 3, canvas.width - 6, canvas.height - 6);
         ctx.restore();
       }
     }
@@ -1052,6 +1877,16 @@
       gameRunning = false;
       gamePaused = false;
       clearInterval(gameLoop);
+
+      // Create explosion effect
+      if (gameSettings.particleEffects) {
+        for (let i = 0; i < 20; i++) {
+          createParticle(snake[0].x, snake[0].y, '#ff4444', {
+            x: (Math.random() - 0.5) * 8,
+            y: (Math.random() - 0.5) * 8
+          });
+        }
+      }
 
       // Update best score
       if (score > bestScore) {
@@ -1063,14 +1898,14 @@
       // Update final stats
       document.getElementById('finalScore').textContent = score;
       document.getElementById('finalLevel').textContent = level;
-      document.getElementById('finalLength').textContent = snake.length;
-      document.getElementById('finalBigFood').textContent = bigFoodEaten;
+      document.getElementById('finalCombo').textContent = maxCombo;
+      document.getElementById('finalSpecialFood').textContent = specialFoodEaten;
 
       gameOverElement.style.display = 'block';
 
       // Game over screen effect
       ctx.save();
-      ctx.fillStyle = 'rgba(255, 68, 68, 0.2)';
+      ctx.fillStyle = 'rgba(255, 68, 68, 0.3)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.restore();
     }
@@ -1078,6 +1913,7 @@
     function startNewGame() {
       gameOverElement.style.display = 'none';
       levelUpElement.style.display = 'none';
+      multiplierElement.style.display = 'none';
       initGame();
       gameRunning = true;
       gamePaused = false;
@@ -1098,7 +1934,7 @@
 
         // Enhanced pause overlay
         ctx.save();
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.fillStyle = '#fff';
         ctx.font = 'bold 32px Orbitron';
@@ -1122,21 +1958,26 @@
 
     function restartGameLoop() {
       if (gameLoop) clearInterval(gameLoop);
-      gameLoop = setInterval(updateGame, currentSpeed);
+      const effectiveSpeed = slowMotionActive ? currentSpeed * 1.5 : currentSpeed;
+      gameLoop = setInterval(updateGame, effectiveSpeed);
     }
 
     function updateUI() {
-      scoreElement.textContent = score;
+      scoreElement.textContent = score.toLocaleString();
       levelElement.textContent = level;
-      levelTargetElement.textContent = `${levelProgress}/100`;
+      const requiredForNextLevel = 100 + (level - 1) * 25;
+      levelTargetElement.textContent = `${levelProgress}/${requiredForNextLevel}`;
       snakeLengthElement.textContent = snake.length;
       speedDisplayElement.textContent = `${(baseSpeed / currentSpeed).toFixed(1)}x`;
-      bigFoodCountElement.textContent = bigFoodEaten;
-      bestScoreElement.textContent = bestScore;
+      specialFoodCountElement.textContent = specialFoodEaten;
+      comboCounterElement.textContent = comboCount;
+      bestScoreElement.textContent = parseInt(bestScore).toLocaleString();
 
       // Update progress bar
-      const progressPercent = (levelProgress / 100) * 100;
+      const progressPercent = (levelProgress / requiredForNextLevel) * 100;
       levelProgressElement.style.width = progressPercent + '%';
+
+      updatePowerUpDisplay();
     }
 
     function showLevelUpNotification() {
@@ -1147,16 +1988,18 @@
       document.getElementById('levelUpTitle').textContent = `Level ${level}!`;
       document.getElementById('levelUpMessage').textContent = `You've reached level ${level}!`;
 
+      const difficulty = difficultySettings[gameSettings.difficulty];
       let mechanicText = `Speed: ${(baseSpeed / currentSpeed).toFixed(1)}x`;
 
-      if (level === 4) {
-        mechanicText = '⚠️ Wall collision enabled! Speed: ' + (baseSpeed / currentSpeed).toFixed(1) + 'x';
-      } else if (level <= 3) {
-        mechanicText = 'Wall wrapping • Speed: ' + (baseSpeed / currentSpeed).toFixed(1) + 'x';
+      if (level === difficulty.wallCollisionLevel + 1) {
+        mechanicText = '⚠️ Wall collision enabled! ' + mechanicText;
+      } else if (level === 3) {
+        mechanicText = '🚧 Obstacles appear! ' + mechanicText;
+      } else if (level === 5) {
+        mechanicText = '🌀 Portals activated! ' + mechanicText;
       }
 
       document.getElementById('levelUpMechanic').textContent = mechanicText;
-
       levelUpElement.style.display = 'block';
 
       setTimeout(() => {
@@ -1166,12 +2009,18 @@
       }, 2500);
     }
 
-    // Improved keyboard controls
+    // Enhanced keyboard controls
     document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        toggleSettings();
+        return;
+      }
+
       if (!gameRunning || gamePaused) {
-        if (e.key === ' ') {
+        if (e.key === ' ' || e.key === 'Enter') {
           e.preventDefault();
           if (gamePaused) resumeGame();
+          else if (!gameRunning) startNewGame();
           return;
         }
         return;
@@ -1198,6 +2047,7 @@
           if (snakeDirection !== 'left') newDirection = 'right';
           break;
         case ' ':
+        case 'p':
           e.preventDefault();
           pauseGame();
           break;
@@ -1209,7 +2059,19 @@
       }
     });
 
-    // Enhanced mobile D-pad controls
+    // Settings event listeners
+    document.getElementById('volumeSlider').addEventListener('input', (e) => {
+      document.getElementById('volumeValue').textContent = e.target.value + '%';
+    });
+
+    document.querySelectorAll('.difficulty-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.difficulty-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+
+    // Mobile D-pad controls
     document.querySelectorAll('.dpad-btn').forEach(btn => {
       btn.addEventListener('touchstart', (e) => {
         e.preventDefault();
@@ -1243,11 +2105,11 @@
       }, { passive: false });
     });
 
-    // Improved swipe controls with better responsiveness
+    // Enhanced swipe controls
     let touchStartX = null;
     let touchStartY = null;
     let touchStartTime = null;
-    const minSwipeDistance = 25;
+    const minSwipeDistance = 30;
     const maxSwipeTime = 300;
 
     canvas.addEventListener('touchstart', (e) => {
@@ -1271,7 +2133,6 @@
       const deltaY = touch.clientY - touchStartY;
       const deltaTime = Date.now() - touchStartTime;
 
-      // Only register quick swipes
       if (deltaTime > maxSwipeTime) return;
 
       const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
@@ -1280,11 +2141,9 @@
       let newDirection = null;
 
       if (Math.abs(deltaX) > Math.abs(deltaY)) {
-        // Horizontal swipe
         if (deltaX > 0 && snakeDirection !== 'left') newDirection = 'right';
         else if (deltaX < 0 && snakeDirection !== 'right') newDirection = 'left';
       } else {
-        // Vertical swipe
         if (deltaY > 0 && snakeDirection !== 'up') newDirection = 'down';
         else if (deltaY < 0 && snakeDirection !== 'down') newDirection = 'up';
       }
@@ -1300,30 +2159,45 @@
 
     // Window resize and orientation handling
     window.addEventListener('resize', () => {
-      setTimeout(() => {
-        resizeCanvas();
-      }, 100);
+      setTimeout(resizeCanvas, 100);
     });
 
     window.addEventListener('orientationchange', () => {
-      setTimeout(() => {
-        resizeCanvas();
-      }, 200);
+      setTimeout(resizeCanvas, 200);
     });
+
+    // Initialize settings UI
+    function initializeSettings() {
+      document.getElementById('showDpad').checked = gameSettings.showDpad;
+      document.getElementById('volumeSlider').value = gameSettings.volume;
+      document.getElementById('volumeValue').textContent = gameSettings.volume + '%';
+      document.getElementById('particleEffects').checked = gameSettings.particleEffects;
+
+      document.querySelectorAll('.difficulty-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.difficulty === gameSettings.difficulty);
+      });
+
+      // Apply mobile D-pad setting
+      const mobileDpad = document.getElementById('mobileDpad');
+      if (!gameSettings.showDpad) {
+        mobileDpad.classList.add('hidden');
+      }
+    }
 
     // Game initialization
     resizeCanvas();
     initGame();
     render();
+    initializeSettings();
 
     // Update best score display
-    bestScoreElement.textContent = bestScore;
+    bestScoreElement.textContent = parseInt(bestScore).toLocaleString();
 
     // Initial button states
     document.getElementById('pauseBtn').disabled = true;
     document.getElementById('resumeBtn').disabled = true;
 
-    // Auto-start feature
+    // Auto-start hint
     setTimeout(() => {
       if (!gameRunning) {
         document.getElementById('startBtn').style.animation = 'levelUpPulse 1s ease-in-out infinite';
